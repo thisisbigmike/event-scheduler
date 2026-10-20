@@ -80,7 +80,7 @@ sudo mariadb < database/eventdb.sql
 
 GitHub can host two things for this project:
 
-- **A project page (GitHub Pages):** the `docs/` folder holds a page describing the system, with screenshots and the demo accounts. GitHub Pages only serves fixed pages, so the page can't run the system itself. To switch it on: in the repository, open **Settings → Pages**, set **Source** to **Deploy from a branch**, choose **main** and **/docs**, and click **Save**. After a minute or two it's live at https://thisisbigmike.github.io/event-scheduler/.
+- **A project page (GitHub Pages):** the `docs/` folder holds a page describing the system, with screenshots and the demo accounts. GitHub Pages only serves fixed pages, so the page can't run the system itself. It is live at https://thisisbigmike.github.io/event-scheduler/ and is published from the `gh-pages` branch, which is a copy of `docs/`. After changing anything in `docs/`, update the live page with `git push origin $(git subtree split --prefix docs):gh-pages --force`.
 - **The live system (GitHub Codespaces):** [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/thisisbigmike/event-scheduler) Click the badge and create the codespace. The first build takes a few minutes, then the system starts on port 80. Open the **Ports** tab and click the globe icon next to port 80. To share the link, right-click the port and set **Port Visibility** to **Public**. The link works only while the codespace is running; it stops after 30 minutes without activity. Free GitHub accounts get a monthly allowance of Codespaces hours.
 
 ## Deploy online with Render (free, one click)
