@@ -1,7 +1,7 @@
 # Event Scheduling Management System
 
 A web-based system for scheduling events at the Institute of Management and Technology (IMT), Enugu.
-It stops venue clashes, notifies attendees by SMS and e-mail, and keeps records of events, attendance and feedback.
+It stops venue clashes, notifies attendees by SMS and e-mail, and keeps records of events, attendees and feedback.
 
 **Built with:** HTML, CSS, JavaScript/jQuery, PHP 8 and MySQL/MariaDB.
 
