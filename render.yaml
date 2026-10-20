@@ -1,0 +1,8 @@
+# One-click deploy on Render (free plan): https://render.com/deploy
+services:
+  - type: web
+    name: imt-event-scheduler
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /index.php
