@@ -4,5 +4,6 @@ services:
     name: imt-event-scheduler
     runtime: docker
     plan: free
+    region: frankfurt   # closest Render region to Nigeria; can't be changed later
     dockerfilePath: ./Dockerfile
     healthCheckPath: /index.php

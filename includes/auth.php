@@ -2,6 +2,9 @@
 // Sessions, login checks, CSRF protection and small output helpers.
 require_once __DIR__ . '/db.php';
 
+// Session cookie: hidden from JavaScript and not sent with requests from other sites
+ini_set('session.use_strict_mode', '1');
+session_set_cookie_params(['httponly' => true, 'samesite' => 'Lax']);
 session_start();
 
 // Escape text before printing it in HTML (protection against XSS).
@@ -81,7 +84,8 @@ function csrf_field()
 
 function check_csrf()
 {
-    if (!hash_equals(csrf_token(), $_POST['csrf'] ?? '')) {
+    $sent = $_POST['csrf'] ?? '';
+    if (!is_string($sent) || !hash_equals(csrf_token(), $sent)) {
         die('Invalid form submission. Please go back and try again.');
     }
 }

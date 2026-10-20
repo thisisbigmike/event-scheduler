@@ -19,6 +19,7 @@ try {
     // Keep MySQL's clock in the same timezone as PHP.
     $conn->query("SET time_zone = '" . date('P') . "'");
 } catch (mysqli_sql_exception $ex) {
+    http_response_code(503); // "service unavailable", so hosting health checks notice
     die('Could not connect to the database. Is MariaDB running and was database/eventdb.sql imported? (' . $ex->getMessage() . ')');
 }
 

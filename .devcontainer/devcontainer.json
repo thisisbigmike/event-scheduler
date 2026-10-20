@@ -1,0 +1,19 @@
+{
+  // Runs the real system in GitHub Codespaces, using the project's Dockerfile.
+  // The container starts MariaDB and Apache itself (overrideCommand: false),
+  // and the app is served on port 80.
+  "name": "IMT Event Scheduler",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": ".."
+  },
+  "overrideCommand": false,
+  "remoteUser": "root",
+  "forwardPorts": [80],
+  "portsAttributes": {
+    "80": {
+      "label": "Event Scheduler",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}

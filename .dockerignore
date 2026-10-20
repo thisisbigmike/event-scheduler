@@ -3,3 +3,5 @@ config.php
 uploads/*.png
 uploads/*.jpg
 *.zip
+docs
+.devcontainer

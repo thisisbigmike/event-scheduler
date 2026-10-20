@@ -76,6 +76,13 @@ sudo mariadb < database/eventdb.sql
 
 ---
 
+## Hosting on GitHub
+
+GitHub can host two things for this project:
+
+- **A project page (GitHub Pages):** the `docs/` folder holds a page describing the system, with screenshots and the demo accounts. GitHub Pages only serves fixed pages, so the page can't run the system itself. To switch it on: in the repository, open **Settings → Pages**, set **Source** to **Deploy from a branch**, choose **main** and **/docs**, and click **Save**. After a minute or two it's live at https://thisisbigmike.github.io/event-scheduler/.
+- **The live system (GitHub Codespaces):** [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/thisisbigmike/event-scheduler) Click the badge and create the codespace. The first build takes a few minutes, then the system starts on port 80. Open the **Ports** tab and click the globe icon next to port 80. To share the link, right-click the port and set **Port Visibility** to **Public**. The link works only while the codespace is running; it stops after 30 minutes without activity. Free GitHub accounts get a monthly allowance of Codespaces hours.
+
 ## Deploy online with Render (free, one click)
 
 The project includes a `Dockerfile` that runs Apache, PHP and MariaDB together, and a `render.yaml` blueprint, so it deploys to [Render](https://render.com) without any setup.
@@ -90,7 +97,8 @@ On the free plan:
 
 - The site goes to sleep after 15 minutes without visitors, and the next visit takes about a minute to wake it.
 - The demo data is reloaded every time the site starts, so changes made online don't last. That keeps the demo clean.
-- It runs in demo mode: SMS and e-mail are logged on the Notifications page, not sent.
+- It runs in demo mode: SMS and e-mail are logged on the Notifications page, not sent. Real e-mail can't be switched on there: Render's free plan blocks outgoing e-mail ports (25, 465 and 587).
+- Anyone with the link can log in as the admin, because the demo passwords are printed in this public README. Until the next restart they can change or delete data. Don't enter real staff details on the online demo.
 
 To run the same container on your own computer: `docker build -t imt-event-scheduler .` then `docker run -p 8080:80 imt-event-scheduler`, and open http://localhost:8080.
 
@@ -135,7 +143,7 @@ Keep `demo_mode` set to `true` on free hosting: free plans usually block outgoin
 
 The system starts in **demo mode**. Messages are saved on the Notifications page instead of being sent, so the demo works without internet or SMS credit.
 
-To send for real, edit `config.php`:
+To send for real, edit `config.php` on your own computer or server. Never do this on the public Render demo: there, `config.php` is built from `config.sample.php`, so your keys would end up in the public repository, and anyone with the published admin password could send SMS on your credit. On any server that sends real messages, change the admin password first.
 
 ```php
 'demo_mode'     => false,
@@ -210,6 +218,8 @@ crontab -e
 | `apache/event-scheduler.conf` | Apache settings that block private files when the site is public |
 | `Dockerfile`, `docker/` | All-in-one container: Apache + PHP + MariaDB, loads the demo data on start |
 | `render.yaml` | Render blueprint for the one-click free deploy |
+| `.devcontainer/devcontainer.json` | Runs the live system in GitHub Codespaces |
+| `docs/` | Project page for GitHub Pages |
 
 ## Database tables
 

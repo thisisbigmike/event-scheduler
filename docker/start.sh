@@ -9,11 +9,15 @@ sed -i "s/<VirtualHost \*:[0-9]*>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-a
 
 # Start the database (only reachable from inside this container)
 mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
-mysqld_safe --bind-address=127.0.0.1 >/dev/null 2>&1 &
+mariadbd-safe --skip-syslog --log-error=/var/lib/mysql/mariadb.err --bind-address=127.0.0.1 >/dev/null 2>&1 &
 i=0
 until mariadb -e "SELECT 1" >/dev/null 2>&1; do
     i=$((i + 1))
-    if [ "$i" -gt 60 ]; then echo "MariaDB did not start"; exit 1; fi
+    if [ "$i" -gt 60 ]; then
+        echo "MariaDB did not start. Last lines of its log:"
+        tail -n 30 /var/lib/mysql/mariadb.err
+        exit 1
+    fi
     sleep 1
 done
 
